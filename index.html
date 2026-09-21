@@ -1,98 +1,84 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Susun tata letak kantung tidur untuk sleepover di ruang keluarga secara instan." />
-  <title>Sleepover Sleeping Bag Space Planner</title>
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sleepover Sleeping Bag Space Planner</title>
+<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="app-header">
-    <div class="brand">
-      <span class="brand-emoji" aria-hidden="true">🛌</span>
-      <div>
-        <h1>Sleepover Sleeping Bag Space Planner</h1>
-        <p>Susun kantung tidur di ruang keluarga dalam sekejap.</p>
-      </div>
-    </div>
-  </header>
-
-  <main class="layout">
-    <aside class="panel controls" aria-label="Kontrol perencanaan">
-      <section class="card" aria-labelledby="roomTitle">
-        <h2 id="roomTitle">🏠 Ukuran Ruangan</h2>
-        <div class="field-grid">
-          <label class="field"><span>Panjang (ft)</span>
-            <input id="roomLength" type="number" inputmode="decimal" min="1" max="500" step="1" value="12" aria-label="Panjang ruangan dalam kaki" />
-          </label>
-          <label class="field"><span>Lebar (ft)</span>
-            <input id="roomWidth" type="number" inputmode="decimal" min="1" max="500" step="1" value="10" aria-label="Lebar ruangan dalam kaki" />
-          </label>
-        </div>
-      </section>
-
-      <section class="card" aria-labelledby="bagTitle">
-        <h2 id="bagTitle">🎒 Ukuran Kantung Tidur</h2>
-        <fieldset class="preset-group">
-          <legend>Preset</legend>
-          <div class="seg" id="presetSeg" role="radiogroup" aria-label="Preset ukuran kantung tidur">
-            <button type="button" class="seg-btn active" data-preset="kid" aria-pressed="true">Standard Kid<br /><small>2.5 × 5 ft</small></button>
-            <button type="button" class="seg-btn" data-preset="adult" aria-pressed="false">Adult<br /><small>3 × 6 ft</small></button>
-            <button type="button" class="seg-btn" data-preset="custom" aria-pressed="false">Custom<br /><small>sesuai input</small></button>
-          </div>
-        </fieldset>
-        <div class="field-grid">
-          <label class="field"><span>Lebar (ft)</span>
-            <input id="bagWidth" type="number" inputmode="decimal" min="0.5" max="50" step="0.5" value="2.5" aria-label="Lebar kantung tidur dalam kaki" />
-          </label>
-          <label class="field"><span>Panjang (ft)</span>
-            <input id="bagLength" type="number" inputmode="decimal" min="0.5" max="50" step="0.5" value="5" aria-label="Panjang kantung tidur dalam kaki" />
-          </label>
-        </div>
-        <div class="orient-row" role="radiogroup" aria-label="Orientasi kantung tidur">
-          <span class="orient-label">Orientasi</span>
-          <div class="seg seg-orient" id="orientSeg">
-            <button type="button" class="seg-btn" data-orient="portrait" aria-pressed="true">📐 Portrait</button>
-            <button type="button" class="seg-btn" data-orient="landscape" aria-pressed="false">🔄 Landscape</button>
-          </div>
-        </div>
-      </section>
-      <button type="button" class="reset-btn" id="resetBtn">↺ Reset ke Default</button>
-    </aside>
-
-    <section class="panel results" aria-label="Hasil perencanaan">
-      <div class="card results-card">
-        <h2>📊 Ringkasan Tata Letak</h2>
-        <div id="notice" class="notice hidden" role="alert">⚠️ Kantung tidur lebih besar dari ruangan — tidak ada yang pas. Perbesar ruangan atau perkecil kantung tidur, atau coba ganti orientasi.</div>
-        <div class="stat-grid">
-          <div class="stat stat-max"><span class="stat-value" id="statMax">0</span><span class="stat-label">Max Kantung Tidur</span></div>
-          <div class="stat"><span class="stat-value" id="statDims">4 × 2</span><span class="stat-label">Grid (Kolom × Baris)</span></div>
-          <div class="stat"><span class="stat-value" id="statLeftover">0 sq ft</span><span class="stat-label">Sisa Luas Lantai</span></div>
-          <div class="stat"><span class="stat-value" id="statOrientation">Portrait</span><span class="stat-label">Orientasi Aktif</span></div>
-        </div>
-        <div class="compare" id="compareBox" aria-live="polite">
-          <div class="compare-chip"><span>📐 Portrait</span><b id="cmpPortrait">0</b></div>
-          <div class="compare-chip"><span>🔄 Landscape</span><b id="cmpLandscape">0</b></div>
-          <p class="compare-msg" id="cmpMsg"></p>
-        </div>
-      </div>
-
-      <div class="card canvas-card">
-        <div class="canvas-head">
-          <h2>🗺️ Tampilan Atas</h2>
-          <span class="legend"><i class="dot dot-bag"></i> Kantung tidur</span>
-          <span class="legend"><i class="dot dot-empty"></i> Area kosong</span>
-        </div>
-        <div id="canvasWrap" class="canvas-wrap">
-          <div id="canvas" class="canvas" role="img" aria-label="Visualisasi tata letak grid kantung tidur"></div>
-        </div>
-        <p class="canvas-tip">Tip: coba toggle <b>Portrait ⇄ Landscape</b> untuk melihat orientasi mana yang lebih pas.</p>
-      </div>
-    </section>
-  </main>
-
-  <footer class="app-footer"><small id="testSummary"></small></footer>
-  <script src="app.js" defer></script>
+<canvas id="fx"></canvas>
+<div class="page">
+<header class="app-header">
+<div class="brand"><span class="brand-emoji">🛌</span>
+<div><h1>Sleepover Sleeping Bag Space Planner</h1><p>Susun kantung tidur di ruang keluarga dalam sekejap ✨</p></div>
+</div>
+</header>
+<main class="layout">
+<aside class="panel controls">
+<section class="card">
+<h2>🏠 Ukuran Ruangan</h2>
+<div class="field-grid">
+<label class="field"><span>Panjang (ft)</span><input id="roomLength" type="number" min="1" max="500" step="1" value="12" /></label>
+<label class="field"><span>Lebar (ft)</span><input id="roomWidth" type="number" min="1" max="500" step="1" value="10" /></label>
+</div>
+</section>
+<section class="card">
+<h2>🎒 Ukuran Kantung Tidur</h2>
+<fieldset>
+<legend>Preset</legend>
+<div class="seg" id="presetSeg">
+<button type="button" class="seg-btn active" data-preset="kid" aria-pressed="true">Standard Kid<br /><small>2.5 × 5 ft</small></button>
+<button type="button" class="seg-btn" data-preset="adult" aria-pressed="false">Adult<br /><small>3 × 6 ft</small></button>
+<button type="button" class="seg-btn" data-preset="custom" aria-pressed="false">Custom<br /><small>sesuai input</small></button>
+</div>
+</fieldset>
+<div class="field-grid">
+<label class="field"><span>Lebar (ft)</span><input id="bagWidth" type="number" min="0.5" max="50" step="0.5" value="2.5" /></label>
+<label class="field"><span>Panjang (ft)</span><input id="bagLength" type="number" min="0.5" max="50" step="0.5" value="5" /></label>
+</div>
+<div class="orient-row" aria-label="Orientasi kantung tidur">
+<span class="orient-label">Orientasi</span>
+<div class="seg seg-orient" id="orientSeg">
+<button type="button" class="seg-btn" data-orient="portrait" aria-pressed="true">📐 Portrait</button>
+<button type="button" class="seg-btn" data-orient="landscape" aria-pressed="false">🔄 Landscape</button>
+</div>
+</div>
+</section>
+<button type="button" class="reset-btn" id="resetBtn">↺ Reset ke Default</button>
+</aside>
+<section class="panel results">
+<div>
+<h2>📊 Ringkasan Tata Letak</h2>
+<div id="notice" class="notice hidden" role="alert">⚠️ Kantung tidur lebih besar dari ruangan — tidak ada yang pas. Perbesar ruangan atau coba orientasi lain.</div>
+<div class="stat-grid">
+<div class="stat stat-max"><span class="stat-value" id="statMax">0</span><span class="stat-label">Max Kantung Tidur</span></div>
+<div class="stat"><span class="stat-value" id="statDims">4 × 2</span><span class="stat-label">Grid (Kolom × Baris)</span></div>
+<div class="stat"><span class="stat-value" id="statLeftover">0 sq ft</span><span class="stat-label">Sisa Luas Lantai</span></div>
+<div class="stat"><span class="stat-value" id="statOrientation">Portrait</span><span class="stat-label">Orientasi Aktif</span></div>
+</div>
+<div class="compare" id="compareBox">
+<div class="compare-chip"><span>📐 Portrait</span><b id="cmpPortrait">0</b></div>
+<div class="compare-chip"><span>🔄 Landscape</span><b id="cmpLandscape">0</b></div>
+<p class="compare-msg" id="cmpMsg"></p>
+</div>
+</div>
+<div class="card canvas-card">
+<div class="canvas-head">
+<h2>🗺️ Tampilan Atas</h2>
+<span class="legend"><i class="dot dot-bag"></i> Kantung tidur</span>
+<span class="legend"><i class="dot dot-empty"></i> Area kosong</span>
+</div>
+<div id="canvasWrap" class="canvas-wrap">
+<div id="canvas" class="canvas" role="img" aria-label="Visualisasi tata letak grid kantung tidur"></div>
+</div>
+<p class="canvas-tip">Tip: toggle <b>Portrait ⇄ Landscape</b> untuk orientasi yang lebih pas.</p>
+</div>
+</section>
+</main>
+<footer class="app-footer"><small id="testSummary"></small></footer>
+</div>
+<div id="toasts"></div>
+<script src="app.js" defer></script>
 </body>
 </html>
