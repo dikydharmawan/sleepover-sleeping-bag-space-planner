@@ -98,7 +98,7 @@ function startParticles(){
   const cv = $("fx");
   if (!cv || !cv.getContext) return;
   const cx = cv.getContext("2d");
-  const COLORS = ["255,180,90","255,140,60","255,215,150","250,120,80"];
+  const COLORS = ["255,200,110","255,150,70","255,220,160","255,120,90","255,215,120"];
   let w = 0, h = 0, parts = [];
   const resize = () => { w = cv.width = innerWidth; h = cv.height = innerHeight; };
   const spawn = i => { parts[i] = { x:Math.random()*w, y:Math.random()*h, r:.8+Math.random()*2.2, vy:.15+Math.random()*.45, vx:-.15+Math.random()*.5, s:.4+Math.random()*.6, p:Math.random()*6.28, c:COLORS[Math.random()*COLORS.length|0] }; };
